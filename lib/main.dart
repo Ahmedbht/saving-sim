@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
 
     double total = 0;
     for (int i = 0; i < totalMonths; i++) {
-      total = totla * (1 + monthlyRate) + monthly;
+      total = total * (1 + monthlyRate) + monthly;
     }
     setState(() {
       _totalSavings = monthly * 12 * years;
@@ -55,6 +55,13 @@ class _MyAppState extends State<MyApp> {
                 controller: _yearsController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(labelText: 'Number of Years'),
+              ),
+              const SizedBox(height :12),
+              TextField(
+                controller: _interestController,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Annual Interest Rate (%)'),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
