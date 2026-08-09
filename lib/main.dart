@@ -14,13 +14,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final TextEditingController _monthlycontroller = TextEditingController();
   final TextEditingController _yearsController = TextEditingController();
-
+  final TextEditingController _interestController = TextEditingController();
   double _totalSavings = 0.0;
 
   void _calculate() {
     final double monthly = double.tryParse(_monthlycontroller.text) ?? 0;
     final int years = int.tryParse(_yearsController.text) ?? 0;
+    final double anualRate = double.tryParse(_interestController.text) ?? 0;
 
+    final double monthlyRate = anualRate / 100 / 12;
+    final int totalMonths = years * 12;
+
+    double total = 0;
+    for (int i = 0; i < totalMonths; i++) {
+      total = totla * (1 + monthlyRate) + monthly;
+    }
     setState(() {
       _totalSavings = monthly * 12 * years;
     });
