@@ -25,29 +25,46 @@ class _MyAppState extends State<MyApp> {
       _totalSavings = monthly * 12 * years;
     });
   }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Saving Simulator')),
-        body :Padding(
-          padding : const EdgeInsets.all(20),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
           child: Column(
-            children:[
+            children: [
               TextField(
                 controller: _monthlycontroller,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration( labelText: 'Monthly Savings (\$)'),
+                decoration: const InputDecoration(
+                  labelText: 'Monthly Savings (\$)',
+                ),
               ),
-              const SizedBox(height :12),
+              const SizedBox(height: 12),
               TextField(
                 controller: _yearsController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(labelText: 'Number of Years'),
               ),
-            ]
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _calculate,
+                child: const Text('Calculate'),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Total Savings: \$${_totalSavings.toStringAsFixed(2)}',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
-        ),      
-      );
+        ),
+      ),
+    );
   }
 }
