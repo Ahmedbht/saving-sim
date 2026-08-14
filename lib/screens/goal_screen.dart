@@ -60,7 +60,7 @@ class _GoalScreenState extends State<GoalScreen> {
 const SizedBox(height: 16),
 DropdownButtonFormField<String>(
   initialValue: _currency,
-  decoration: const InputDecoration(
+  decoration: InputDecoration(
     labelText: 'Currency',
     border: OutlineInputBorder(),
   ),
@@ -78,8 +78,8 @@ const SizedBox(height: 16),
             TextField(
               controller: _monthlyController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Monthly savings (\$)',
+              decoration: InputDecoration(
+                labelText: 'Monthly savings ($_currency)',
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.savings),
               ),
