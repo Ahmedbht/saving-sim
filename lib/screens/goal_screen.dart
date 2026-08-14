@@ -14,15 +14,15 @@ class _GoalScreenState extends State<GoalScreen> {
   final TextEditingController _targetController = TextEditingController();
   String _result = '';
   bool _hasResult = false;
-  String? _errirText;
+  String? _errorText;
   void _calculate() {
     final double monthly = double.tryParse(_monthlyController.text) ?? 0;
     final double target = double.tryParse(_targetController.text) ?? 0;
 
     if (monthly <= 0 || target <= 0) {
       setState(() {
-        _result = 'Please enter valid numbers';
-        _hasResult = true;
+        _errorText = 'Please enter valid numbers';
+        _hasResult = false;
       });
       return;
     }
@@ -32,6 +32,7 @@ class _GoalScreenState extends State<GoalScreen> {
     final int remainingMonths = (monthsNeeded % 12).round();
 
     setState(() {
+      _errorText = null;
       _result = '$years years and $remainingMonths months';
       _hasResult = true;
     });
