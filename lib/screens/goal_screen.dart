@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class GoalScreen extends StatefulWidget {
   final String goalName;
-
+  String _currency = '\$';
+  final List<String> _currencies = ['\$', '€', '£', 'MAD',];
   const GoalScreen({super.key, required this.goalName});
 
   @override
