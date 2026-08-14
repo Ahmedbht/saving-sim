@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class GoalScreen extends StatefulWidget {
   final String goalName;
-  String _currency = '\$';
-  final List<String> _currencies = ['\$', '€', '£', 'MAD',];
   const GoalScreen({super.key, required this.goalName});
 
   @override
@@ -16,6 +14,8 @@ class _GoalScreenState extends State<GoalScreen> {
   String _result = '';
   bool _hasResult = false;
   String? _errorText;
+  String _currency = '\$';
+  final List<String> _currencies = ['\$', '€', '£', 'MAD',];
   void _calculate() {
     final double monthly = double.tryParse(_monthlyController.text) ?? 0;
     final double target = double.tryParse(_targetController.text) ?? 0;
