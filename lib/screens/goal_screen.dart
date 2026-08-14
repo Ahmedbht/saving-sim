@@ -49,15 +49,31 @@ class _GoalScreenState extends State<GoalScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: _targetController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: '${widget.goalName} price (\$)',
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.flag),
-              ),
-            ),
-            const SizedBox(height: 16),
+  controller: _targetController,
+  keyboardType: TextInputType.number,
+  decoration: InputDecoration(
+    labelText: '${widget.goalName} price ($_currency)',
+    border: const OutlineInputBorder(),
+    prefixIcon: const Icon(Icons.flag),
+  ),
+),
+const SizedBox(height: 16),
+DropdownButtonFormField<String>(
+  initialValue: _currency,
+  decoration: const InputDecoration(
+    labelText: 'Currency',
+    border: OutlineInputBorder(),
+  ),
+  items: _currencies.map((c) {
+    return DropdownMenuItem(value: c, child: Text(c));
+  }).toList(),
+  onChanged: (value) {
+    setState(() {
+      _currency = value!;
+    });
+  },
+),
+const SizedBox(height: 16),
 
             TextField(
               controller: _monthlyController,
