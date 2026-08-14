@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class GoalScreen extends StatefulWidget {
-  // This screen accepts a "goal name" from whoever opens it (e.g. "Car", "Home")
   final String goalName;
 
   const GoalScreen({super.key, required this.goalName});
@@ -14,14 +13,17 @@ class _GoalScreenState extends State<GoalScreen> {
   final TextEditingController _monthlyController = TextEditingController();
   final TextEditingController _targetController = TextEditingController();
   String _result = '';
-
+  bool _hasResult = false;
   void _calculate() {
     final double monthly = double.tryParse(_monthlyController.text) ?? 0;
     final double target = double.tryParse(_targetController.text) ?? 0;
 
-    if (monthly <= 0) {
+
+    
+    if (monthly <= 0 || target <= 0) {
       setState(() {
-        _result = 'Enter a valid monthly amount';
+        _result = 'Please enter valid numbers';
+        _hasResult = true;
       });
       return;
     }
@@ -31,7 +33,8 @@ class _GoalScreenState extends State<GoalScreen> {
     final int remainingMonths = (monthsNeeded % 12).round();
 
     setState(() {
-      _result = 'You need $years years and $remainingMonths months';
+      _result = '$years years and $remainingMonths months';
+      _hasResult = true;
     });
   }
 
@@ -40,27 +43,57 @@ class _GoalScreenState extends State<GoalScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Save for ${widget.goalName}')),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(24),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
               controller: _targetController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: '${widget.goalName} price (\$)'),
+              decoration: InputDecoration(
+                labelText: '${widget.goalName} price (\$)',
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.flag),
+              ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
+
             TextField(
               controller: _monthlyController,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Monthly savings (\$)'),
+              decoration: const InputDecoration(
+                labelText: 'Monthly savings (\$)',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.savings),
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
+
             ElevatedButton(
+              style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
               onPressed: _calculate,
-              child: const Text('Calculate'),
+              child: const Text('Calculate', style: TextStyle(fontSize: 16)),
             ),
-            const SizedBox(height: 20),
-            Text(_result, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 24),
+
+            if (_hasResult)
+              Card(
+                elevation: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const Text('Time needed', style: TextStyle(color: Colors.grey)),
+                      const SizedBox(height: 8),
+                      Text(
+                        _result,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),
