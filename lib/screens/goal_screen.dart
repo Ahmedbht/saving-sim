@@ -14,12 +14,11 @@ class _GoalScreenState extends State<GoalScreen> {
   final TextEditingController _targetController = TextEditingController();
   String _result = '';
   bool _hasResult = false;
+  String? _errirText;
   void _calculate() {
     final double monthly = double.tryParse(_monthlyController.text) ?? 0;
     final double target = double.tryParse(_targetController.text) ?? 0;
 
-
-    
     if (monthly <= 0 || target <= 0) {
       setState(() {
         _result = 'Please enter valid numbers';
@@ -70,7 +69,9 @@ class _GoalScreenState extends State<GoalScreen> {
             const SizedBox(height: 24),
 
             ElevatedButton(
-              style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
               onPressed: _calculate,
               child: const Text('Calculate', style: TextStyle(fontSize: 16)),
             ),
@@ -83,12 +84,18 @@ class _GoalScreenState extends State<GoalScreen> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const Text('Time needed', style: TextStyle(color: Colors.grey)),
+                      const Text(
+                        'Time needed',
+                        style: TextStyle(color: Colors.grey),
+                      ),
                       const SizedBox(height: 8),
                       Text(
                         _result,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
