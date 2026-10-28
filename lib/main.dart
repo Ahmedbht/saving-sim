@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  runApp(const MyApp());
+import 'app.dart';
+import 'data/goal_repository.dart';
+import 'state/goals_store.dart';
 
-  Future.delayed(const Duration(seconds: 3), () {
-    FlutterNativeSplash.remove();
-  });
-}
+Future<void> main() async {
+  final binding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: binding);
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final store = GoalsStore(SharedPrefsGoalRepository(SharedPreferencesAsync()));
+  await store.load();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
-    );
-  }
+  runApp(
+    ChangeNotifierProvider.value(value: store, child: const HorizonApp()),
+  );
+  // Data is ready — no reason to keep the splash any longer.
+  FlutterNativeSplash.remove();
 }
